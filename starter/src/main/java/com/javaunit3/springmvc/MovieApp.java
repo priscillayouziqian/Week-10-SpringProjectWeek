@@ -12,7 +12,7 @@ public class MovieApp {
         AnnotationConfigApplicationContext applicationContext =
                 new AnnotationConfigApplicationContext(MovieApp.class);
 
-        //use application context, get the best movie service using the default bean id (since we didn't spedify a bean id, the id will simply be the class name of the bean starting with a lover case).
+        //use application context, get the best movie service using the default bean id (since we didn't specify a bean id, the id will simply be the class name of the bean starting with a lower case).
         BestMovieService bestMovieService = applicationContext.getBean("bestMovieService", BestMovieService.class);
 
         //Using the best movie service, get the best movie
