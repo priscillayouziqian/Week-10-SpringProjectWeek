@@ -41,9 +41,26 @@ public class MovieController {
         @RequestMapping("/voteForBestMovie")
         public String voteForBestMovie(HttpServletRequest request, Model model) {
 
-                String movieTitle = request.getParameter("movieTitle");
+//                String movieTitle = request.getParameter("movieTitle");
+//
+//                model.addAttribute("BestMovieVote", movieTitle);
+//
+//                return "voteForBestMovie";
+                String movieId = request.getParameter("movieId");
+                String voterName = request.getParameter("voterName");
 
-                model.addAttribute("BestMovieVote", movieTitle);
+                Session session = sessionFactory.getCurrentSession();
+
+                session.beginTransaction();
+
+                MovieEntity movieEntity = (MovieEntity) session.get(MovieEntity.class, Integer.parseInt(movieId));
+                VoteEntity newVote = new VoteEntity();
+                newVote.setVoterName(voterName);
+                movieEntity.addVote(newVote);
+
+                session.update(movieEntity);
+
+                session.getTransaction().commit();
 
                 return "voteForBestMovie";
         }
@@ -77,6 +94,8 @@ public class MovieController {
 
         @RequestMapping("/voteForBestMovieForm")
         public String voteForBestMovieFormPage(Model model){
+
+
                 Session session = sessionFactory.getCurrentSession();
                 session.beginTransaction();
 
